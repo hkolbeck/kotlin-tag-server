@@ -5,6 +5,7 @@ import com.google.inject.Guice
 import com.google.inject.Stage
 import dev.cbeck.tags.http.TagResource
 import io.dropwizard.Application
+import io.dropwizard.jdbi3.JdbiFactory
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
 import java.lang.RuntimeException
@@ -23,7 +24,10 @@ class TagServer : Application<TagConfiguration>() {
         val conf = configuration ?: throw RuntimeException("Null configuration passed into run()")
         val env = environment ?: throw RuntimeException("Null configuration passed into run()")
 
-        val injector = Guice.createInjector(Stage.PRODUCTION, StorageModule())
+        val jdbiFactory = JdbiFactory()
+        val jdbi = jdbiFactory.build(env, conf.dataSourceFactory, "postgresql")
+
+        val injector = Guice.createInjector(Stage.PRODUCTION, StorageModule(jdbi))
 
         env.jersey().register(injector.getInstance(TagResource::class.java))
     }

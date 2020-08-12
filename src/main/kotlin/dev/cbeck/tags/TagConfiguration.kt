@@ -1,11 +1,14 @@
 package dev.cbeck.tags
 
 import io.dropwizard.Configuration
-import javax.validation.constraints.NotEmpty
+import io.dropwizard.db.DataSourceFactory
+import javax.validation.Valid
 
 
 class TagConfiguration() : Configuration() {
 
-    @NotEmpty
-    var garbage: String = ""
+    @Valid
+    var dataSourceFactory: DataSourceFactory = DataSourceFactory()
+
+
 }
