@@ -5,6 +5,11 @@ import javax.inject.Inject
 
 
 class PostgresTagStorage @Inject constructor(var tagDao: TagDao) : TagStorage {
+
+    init {
+        tagDao.makeTable()
+    }
+
     override fun modifyTags(user: String, add: List<String>, remove: List<String>, opTimestamp: Long): Set<String> {
         val tags = mutableListOf<String>()
         val ops = mutableListOf<Boolean>()

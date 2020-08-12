@@ -12,7 +12,7 @@ interface TagDao {
         CREATE TABLE IF NOT EXISTS user_tags (
             user_name VARCHAR,
             tag VARCHAR, 
-            is_add BOOLEAN,
+            present BOOLEAN,
             ts BIGINT,
             
             PRIMARY KEY (user_name, tag)
