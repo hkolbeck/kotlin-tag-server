@@ -1,23 +1,26 @@
-package dev.cbeck.tags
+package dev.cbeck.tags.pgsql
 
+import dev.cbeck.tags.TagStorage
 import javax.inject.Inject
 
 
-class PostgresTagStorage @Inject constructor() : TagStorage {
+class PostgresTagStorage @Inject constructor(var tagDao: TagDao) : TagStorage {
     override fun modifyTags(user: String, add: List<String>, remove: List<String>, opTimestamp: Long): Set<String> {
-        TODO("Not yet implemented")
-    }
+        val tags = mutableListOf<String>()
+        val ops = mutableListOf<Boolean>()
 
-    override fun healthCheck(): String? {
-        TODO("Not yet implemented")
-    }
+        add.forEach {
+            tags.add(it)
+            ops.add(true)
+        }
 
-    override fun start() {
-        TODO("Not yet implemented")
-    }
+        remove.forEach {
+            tags.add(it)
+            ops.add(false)
+        }
 
-    override fun stop() {
-        TODO("Not yet implemented")
-    }
+        tagDao.updateTags(tags, ops.iterator(), user, opTimestamp)
 
+        return tagDao.getTags(user)
+    }
 }
