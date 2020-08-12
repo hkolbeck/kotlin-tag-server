@@ -1,14 +1,11 @@
 package dev.cbeck.tags
 
-import com.fasterxml.jackson.core.JsonGenerator
-import com.fasterxml.jackson.databind.SerializerProvider
-import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.module.kotlin.KotlinModule
+import com.google.inject.Guice
+import com.google.inject.Stage
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
-import pbandk.Message
-import java.io.IOException
 import java.lang.RuntimeException
 
 class TagServer : Application<TagConfiguration>() {
@@ -22,16 +19,15 @@ class TagServer : Application<TagConfiguration>() {
     }
 
     override fun run(configuration: TagConfiguration?, environment: Environment?) {
-//        val conf = configuration ?: throw RuntimeException("Null configuration passed into run()")
+        val conf = configuration ?: throw RuntimeException("Null configuration passed into run()")
         val env = environment ?: throw RuntimeException("Null configuration passed into run()")
-        println("in run")
-//        val injector = Guice.createInjector(Stage.PRODUCTION)
 
-        val tagStorage = InMemoryTagStorage()
-        env.jersey().register(TagResource(tagStorage))
-        env.healthChecks().register("tag-storage", TagStorageHealthcheck(tagStorage))
+        val injector = Guice.createInjector(Stage.PRODUCTION, StorageModule())
 
-//        env.lifecycle().manage(InMemoryTagStorage())
+        env.jersey().register(injector.getInstance(TagResource::class.java))
+        env.healthChecks().register("tag-storage", injector.getInstance(TagStorageHealthcheck::class.java))
+
+        env.lifecycle().manage(InMemoryTagStorage())
     }
 
     companion object {
