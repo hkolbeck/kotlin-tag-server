@@ -4,8 +4,9 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 plugins {
     kotlin("jvm") version "1.3.72"
     kotlin("plugin.serialization") version "1.3.72"
-    application
     id("com.google.protobuf") version "0.8.12"
+    id("com.google.cloud.tools.jib") version "2.5.0"
+    application
 }
 
 val kotlinxSerializationVersion by extra("0.20.0")
