@@ -1,15 +1,20 @@
 package dev.cbeck.tags
 
-import com.google.inject.Guice
-import com.google.inject.Stage
+import com.fasterxml.jackson.core.JsonGenerator
+import com.fasterxml.jackson.databind.SerializerProvider
+import com.fasterxml.jackson.databind.ser.std.StdSerializer
+import com.fasterxml.jackson.module.kotlin.KotlinModule
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
+import pbandk.Message
+import java.io.IOException
 import java.lang.RuntimeException
 
 class TagServer : Application<TagConfiguration>() {
     override fun initialize(bootstrap: Bootstrap<TagConfiguration>?) {
-        super.initialize(bootstrap)
+        bootstrap?.objectMapper?.registerModule(KotlinModule())
+        bootstrap?.objectMapper?.registerModule(PBSerDeModule())
     }
 
     override fun getName(): String {
@@ -22,7 +27,9 @@ class TagServer : Application<TagConfiguration>() {
         println("in run")
 //        val injector = Guice.createInjector(Stage.PRODUCTION)
 
-        env.jersey().register(TagResource(InMemoryTagStorage()))
+        val tagStorage = InMemoryTagStorage()
+        env.jersey().register(TagResource(tagStorage))
+        env.healthChecks().register("tag-storage", TagStorageHealthcheck(tagStorage))
 
 //        env.lifecycle().manage(InMemoryTagStorage())
     }
