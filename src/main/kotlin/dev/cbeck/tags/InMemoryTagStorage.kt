@@ -30,6 +30,8 @@ class InMemoryTagStorage : TagStorage {
         return userMap.filter { it.value.second }.map { it.key }.toSet()
     }
 
+    override fun healthCheck(): String? = null
+
     override fun start() {
     }
 

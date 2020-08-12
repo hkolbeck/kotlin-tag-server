@@ -10,4 +10,6 @@ interface TagStorage : Managed {
         remove: List<String>,
         opTimestamp: Long
     ): Set<String>
+
+    fun healthCheck() : String?
 }
