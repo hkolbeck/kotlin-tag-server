@@ -1,7 +1,9 @@
 package dev.cbeck.tags
 
+import io.dropwizard.lifecycle.Managed
 
-interface TagStorage {
+
+interface TagStorage : Managed {
     fun modifyTags(
         user: String,
         add: List<String>,
