@@ -15,9 +15,7 @@ val pbandkVersion by extra("0.8.1")
 
 repositories {
     jcenter()
-    if (System.getenv("CI") == "true") {
-        mavenLocal()
-    }
+    mavenCentral()
     maven("https://jitpack.io")
 }
 
@@ -36,6 +34,8 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin:2.11.0")
     implementation("com.google.inject:guice:4.2.0")
     implementation("org.postgresql:postgresql:42.2.4.jre7")
+    implementation("io.dropwizard:dropwizard-jdbi3:2.0.12")
+    implementation("org.jdbi:jdbi3-core:3.14.1")
     implementation("com.github.streem.pbandk:pbandk-runtime-jvm:$pbandkVersion") {
         capabilities {
             requireCapabilities("com.github.streem.pbandk:pbandk-runtime-jvm:jvm-api")
@@ -68,6 +68,13 @@ protobuf {
 }
 
 configurations.named("compileProtoPath") {
+    attributes {
+        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_API))
+        attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
+    }
+}
+
+configurations.named("testCompileProtoPath") {
     attributes {
         attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage.JAVA_API))
         attribute(Category.CATEGORY_ATTRIBUTE, objects.named(Category.LIBRARY))
