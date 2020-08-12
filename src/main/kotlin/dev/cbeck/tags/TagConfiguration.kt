@@ -1,7 +1,7 @@
 package dev.cbeck.tags
 
 import io.dropwizard.Configuration
-import org.hibernate.validator.constraints.NotEmpty
+import javax.validation.constraints.NotEmpty
 
 
 class TagConfiguration() : Configuration() {

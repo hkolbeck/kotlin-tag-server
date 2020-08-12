@@ -3,6 +3,7 @@ package dev.cbeck.tags
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.inject.Guice
 import com.google.inject.Stage
+import dev.cbeck.tags.http.TagResource
 import io.dropwizard.Application
 import io.dropwizard.setup.Bootstrap
 import io.dropwizard.setup.Environment
@@ -25,9 +26,6 @@ class TagServer : Application<TagConfiguration>() {
         val injector = Guice.createInjector(Stage.PRODUCTION, StorageModule())
 
         env.jersey().register(injector.getInstance(TagResource::class.java))
-        env.healthChecks().register("tag-storage", injector.getInstance(TagStorageHealthcheck::class.java))
-
-        env.lifecycle().manage(InMemoryTagStorage())
     }
 
     companion object {
