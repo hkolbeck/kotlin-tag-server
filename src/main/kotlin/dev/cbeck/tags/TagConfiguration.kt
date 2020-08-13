@@ -10,5 +10,4 @@ class TagConfiguration() : Configuration() {
     @Valid
     var dataSourceFactory: DataSourceFactory = DataSourceFactory()
 
-
 }

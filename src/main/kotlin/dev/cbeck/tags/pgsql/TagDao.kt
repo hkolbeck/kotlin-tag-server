@@ -39,7 +39,7 @@ interface TagDao {
     """)
     fun updateTags(
             @Bind("tag") tags: List<String>,
-            @Bind("present") ops: Iterator<Boolean>,
+            @Bind("present") ops: Iterable<Boolean>,
             @Bind("user_name") user: String,
             @Bind("timestamp") timestamp: Long
     )

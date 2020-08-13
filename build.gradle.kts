@@ -17,6 +17,7 @@ repositories {
     jcenter()
     mavenCentral()
     maven("https://jitpack.io")
+    maven("http://jcenter.bintray.com")
 }
 
 application {
@@ -36,11 +37,18 @@ dependencies {
     implementation("org.postgresql:postgresql:42.2.4.jre7")
     implementation("io.dropwizard:dropwizard-jdbi3:2.0.12")
     implementation("org.jdbi:jdbi3-core:3.14.1")
+    implementation("io.swagger.core.v3:swagger-jaxrs2:2.1.2")
+    implementation("org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6")
     implementation("com.github.streem.pbandk:pbandk-runtime-jvm:$pbandkVersion") {
         capabilities {
             requireCapabilities("com.github.streem.pbandk:pbandk-runtime-jvm:jvm-api")
         }
     }
+
+    testImplementation("junit:junit:4.12")
+    testImplementation("org.mockito:mockito-core:2.22.0")
+    testImplementation("com.nhaarman.mockitokotlin2:mockito-kotlin:2.0.0")
+    testImplementation("com.github.tdomzal:junit-docker-rule:0.4.1")
 }
 
 protobuf {

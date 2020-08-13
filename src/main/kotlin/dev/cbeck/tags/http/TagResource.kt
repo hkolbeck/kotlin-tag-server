@@ -15,7 +15,7 @@ import javax.ws.rs.core.MediaType
 
 @Singleton
 @Path("/api")
-class TagResource @Inject constructor(private var tagStorage: TagStorage) {
+class TagResource @Inject constructor(private val tagStorage: TagStorage) {
 
     @Operation(
             summary = "Add, remove, and fetch tags for a user",

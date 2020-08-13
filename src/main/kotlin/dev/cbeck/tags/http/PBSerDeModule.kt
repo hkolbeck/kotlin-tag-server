@@ -1,4 +1,4 @@
-package dev.cbeck.tags
+package dev.cbeck.tags.http
 
 import com.fasterxml.jackson.core.JsonGenerator
 import com.fasterxml.jackson.databind.SerializerProvider

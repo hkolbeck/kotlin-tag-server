@@ -4,27 +4,29 @@ import dev.cbeck.tags.TagStorage
 import javax.inject.Inject
 
 
-class PostgresTagStorage @Inject constructor(var tagDao: TagDao) : TagStorage {
+class PostgresTagStorage @Inject constructor(private val tagDao: TagDao) : TagStorage {
 
     init {
         tagDao.makeTable()
     }
 
     override fun modifyTags(user: String, add: List<String>, remove: List<String>, opTimestamp: Long): Set<String> {
-        val tags = mutableListOf<String>()
-        val ops = mutableListOf<Boolean>()
+        if (add.size + remove.size > 0) {
+            val tags = mutableListOf<String>()
+            val ops = mutableListOf<Boolean>()
 
-        add.forEach {
-            tags.add(it)
-            ops.add(true)
+            add.forEach {
+                tags.add(it)
+                ops.add(true)
+            }
+
+            remove.forEach {
+                tags.add(it)
+                ops.add(false)
+            }
+
+            tagDao.updateTags(tags, ops, user, opTimestamp)
         }
-
-        remove.forEach {
-            tags.add(it)
-            ops.add(false)
-        }
-
-        tagDao.updateTags(tags, ops.iterator(), user, opTimestamp)
 
         return tagDao.getTags(user)
     }

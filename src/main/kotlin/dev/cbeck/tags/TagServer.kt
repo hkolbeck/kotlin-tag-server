@@ -3,6 +3,7 @@ package dev.cbeck.tags
 import com.fasterxml.jackson.module.kotlin.KotlinModule
 import com.google.inject.Guice
 import com.google.inject.Stage
+import dev.cbeck.tags.http.PBSerDeModule
 import dev.cbeck.tags.http.TagResource
 import io.dropwizard.Application
 import io.dropwizard.jdbi3.JdbiFactory
