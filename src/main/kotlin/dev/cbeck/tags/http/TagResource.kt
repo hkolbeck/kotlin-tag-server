@@ -3,6 +3,10 @@ package dev.cbeck.tags.http;
 import dev.cbeck.proto.Request
 import dev.cbeck.proto.Response
 import dev.cbeck.tags.TagStorage
+import io.swagger.v3.oas.annotations.Operation
+import io.swagger.v3.oas.annotations.media.Content
+import io.swagger.v3.oas.annotations.media.Schema
+import io.swagger.v3.oas.annotations.responses.ApiResponse
 import javax.inject.Inject
 import javax.inject.Singleton
 import javax.ws.rs.*
@@ -11,8 +15,20 @@ import javax.ws.rs.core.MediaType
 
 @Singleton
 @Path("/api")
-class TagResource @Inject constructor (private var tagStorage: TagStorage) {
+class TagResource @Inject constructor(private var tagStorage: TagStorage) {
 
+    @Operation(
+            summary = "Add, remove, and fetch tags for a user",
+            description = "Accepts a user, timestamp, a set of tags to add, a set of tags to remove. Performs the " +
+                    "requested operations and returns the resulting tags on the user.",
+            responses = [
+                ApiResponse(
+                        description = "The resulting tags",
+                        content = [Content(schema = Schema(implementation = Response::class))]
+                ),
+                ApiResponse(responseCode = "400", description = "Missing or empty user, or invalid timestamp")
+            ]
+    )
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
     @Produces(MediaType.APPLICATION_JSON)
