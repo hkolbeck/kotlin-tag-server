@@ -33,14 +33,15 @@ interface TagDao {
     @SqlBatch("""
         INSERT INTO user_tags (user_name, tag, present, ts)
         VALUES (:user_name, :tag, :present, :timestamp)
-        ON CONFLICT (user_name, tag) WHERE :timestamp >= ts
-        DO UPDATE SET present = :present AND ts = :timestamp
+        ON CONFLICT (user_name, tag)
+        DO UPDATE SET present = :present, ts = :timestamp
+        WHERE :timestamp >= user_tags.ts
     """)
     fun updateTags(
             @Bind("tag") tags: List<String>,
             @Bind("present") ops: Iterator<Boolean>,
             @Bind("user_name") user: String,
             @Bind("timestamp") timestamp: Long
-    ): Set<String>
+    )
 
 }

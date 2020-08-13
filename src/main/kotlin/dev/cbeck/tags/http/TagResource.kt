@@ -20,8 +20,8 @@ class TagResource @Inject constructor (private var tagStorage: TagStorage) {
     fun serve(
             request: Request
     ): Response {
-        if (request.timestamp <= 0) {
-            throw BadRequestException("'timestamp' must be provided and greater than 0")
+        if (request.timestamp <= 0 && request.add.size + request.remove.size > 0) {
+            throw BadRequestException("'timestamp' must be provided and greater than 0 if any tags are being added or removed")
         }
 
         if (request.user == "") {

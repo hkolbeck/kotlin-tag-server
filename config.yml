@@ -1,4 +1,4 @@
-database:
+dataSourceFactory:
   driverClass: org.postgresql.Driver
   user: postgres
   password: lolsecurity
