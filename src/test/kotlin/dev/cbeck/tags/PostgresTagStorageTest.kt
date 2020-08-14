@@ -3,8 +3,6 @@ package dev.cbeck.tags
 import com.nhaarman.mockitokotlin2.*
 import dev.cbeck.tags.pgsql.PostgresTagStorage
 import dev.cbeck.tags.pgsql.TagDao
-import org.apache.commons.lang3.RandomStringUtils
-import org.junit.Assert
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Test
@@ -26,7 +24,7 @@ class PostgresTagStorageTest : BaseTest() {
     fun before() {
         reset(tagDao)
 
-        opResult = setOf(RandomStringUtils.randomAlphanumeric(10))
+        opResult = setOf(randStr(10))
 
         whenever(tagDao.getTags(any())).thenReturn(opResult)
     }

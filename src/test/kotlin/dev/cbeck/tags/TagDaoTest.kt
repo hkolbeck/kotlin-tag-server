@@ -5,6 +5,7 @@ import org.apache.commons.lang3.RandomStringUtils.randomAlphanumeric as randStr
 import org.jdbi.v3.core.Jdbi
 import org.jdbi.v3.sqlobject.SqlObjectPlugin
 import org.junit.Assert
+import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.ClassRule
 import org.junit.Test
@@ -41,7 +42,7 @@ class TagDaoTest : BaseTest() {
 
         val result = dao.getTags(user)
 
-        Assert.assertEquals(setOf(tag), result)
+        assertEquals(setOf(tag), result)
     }
 
     @Test
@@ -53,7 +54,7 @@ class TagDaoTest : BaseTest() {
         dao.updateTags(listOf(tag), listOf(false), user, firstOpTimestamp + 1)
 
         val result = dao.getTags(user)
-        Assert.assertEquals(setOf<String>(), result)
+        assertEquals(setOf<String>(), result)
     }
 
     @Test
@@ -65,11 +66,11 @@ class TagDaoTest : BaseTest() {
         dao.updateTags(listOf(tag), listOf(false), user, firstOpTimestamp - 1)
 
         val result = dao.getTags(user)
-        Assert.assertEquals(setOf(tag), result)
+        assertEquals(setOf(tag), result)
     }
 
     companion object {
-        val pass = "lolsecurity"
+        const val pass = "lolsecurity"
 
         @ClassRule
         @JvmField

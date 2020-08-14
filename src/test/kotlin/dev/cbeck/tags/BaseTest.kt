@@ -16,14 +16,4 @@ abstract class BaseTest {
     fun setUp() {
         injector.injectMembers(this)
     }
-
-    companion object {
-        fun getOpenPort(): Int {
-            val serverSocket = ServerSocket(0)
-            serverSocket.reuseAddress = true
-            serverSocket.close()
-
-            return serverSocket.localPort
-        }
-    }
 }

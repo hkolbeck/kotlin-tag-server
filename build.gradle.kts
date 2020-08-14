@@ -39,11 +39,7 @@ dependencies {
     implementation("org.jdbi:jdbi3-core:3.14.1")
     implementation("io.swagger.core.v3:swagger-jaxrs2:2.1.2")
     implementation("org.glassfish.jersey.bundles.repackaged:jersey-guava:2.6")
-    implementation("com.github.streem.pbandk:pbandk-runtime-jvm:$pbandkVersion") {
-        capabilities {
-            requireCapabilities("com.github.streem.pbandk:pbandk-runtime-jvm:jvm-api")
-        }
-    }
+    implementation("com.github.streem.pbandk:pbandk-runtime-jvm:$pbandkVersion")
 
     testImplementation("junit:junit:4.12")
     testImplementation("org.mockito:mockito-core:2.22.0")

@@ -28,7 +28,7 @@ Request format:
 ```
 
 The `user` field is always required. The `add` and `remove` fields are always optional. If neither `add` nor `remove` is
-specified then `timestamp` optional and ignored.
+specified then `timestamp` is optional and ignored.
 
 Response format:
 ```json
