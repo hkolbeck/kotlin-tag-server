@@ -2,6 +2,10 @@
 gradle/
 .idea/
 out/
+build/
 *.iml
 *~
 gradlew
+gradlew.bat
+package-info.java
+/src/main/kotlin/dev/cbeck/proto/pbs.kt

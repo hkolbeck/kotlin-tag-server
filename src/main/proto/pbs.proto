@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package dev.cbeck;
+option java_package = "dev.cbeck.proto";
+
+message Request {
+  string user = 1;
+  repeated string add = 2;
+  repeated string remove = 3;
+  fixed64 timestamp = 4;
+}
+
+message Response {
+  repeated string tags = 1;
+}
+
