@@ -12,19 +12,14 @@ import io.dropwizard.setup.Environment
 import java.lang.RuntimeException
 
 class TagServer : Application<TagConfiguration>() {
-    override fun initialize(bootstrap: Bootstrap<TagConfiguration>?) {
-        bootstrap?.objectMapper?.registerModule(KotlinModule())
-        bootstrap?.objectMapper?.registerModule(PBSerDeModule())
+    override fun initialize(bootstrap: Bootstrap<TagConfiguration>) {
+        bootstrap.objectMapper?.registerModule(KotlinModule())
+        bootstrap.objectMapper?.registerModule(PBSerDeModule())
     }
 
-    override fun getName(): String {
-        return "tag-server"
-    }
+    override fun getName(): String = "tag-server"
 
-    override fun run(configuration: TagConfiguration?, environment: Environment?) {
-        val conf = configuration ?: throw RuntimeException("Null configuration passed into run()")
-        val env = environment ?: throw RuntimeException("Null configuration passed into run()")
-
+    override fun run(conf: TagConfiguration, env: Environment) {
         val jdbiFactory = JdbiFactory()
         val jdbi = jdbiFactory.build(env, conf.dataSourceFactory, "postgresql")
 
